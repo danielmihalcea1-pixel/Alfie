@@ -1,0 +1,50 @@
+
+<!DOCTYPE html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alfie's Quest</title>
+<style>
+body{margin:0;font-family:Arial;background:linear-gradient(135deg,#5b247a,#1bcedf);color:#fff;display:flex;justify-content:center}
+#app{max-width:760px;width:100%;padding:20px;text-align:center}
+.card{background:rgba(255,255,255,.12);padding:20px;border-radius:18px}
+img{max-width:100%;border-radius:16px;max-height:420px}
+button{padding:14px 22px;margin:8px;border:0;border-radius:10px;font-size:17px;cursor:pointer}
+.hidden{display:none}
+#fx{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.star{position:absolute;font-size:28px;animation:fly 3s linear forwards}
+@keyframes fly{0%{transform:translateY(0) scale(.2);opacity:1}100%{transform:translateY(-120vh) translateX(var(--x));opacity:0}}
+</style></head><body><div id="fx"></div><div id="app"></div>
+<script>
+const steps=[
+{title:"🐶 Alfie's Quest",img:"poza 00.jpeg",html:`<h2>🐶 Alfie's Quest</h2><p>Alfie are nevoie de ajutorul vostru!</p><button onclick="next()">Start</button>`},
+{q:`<h3>1. Cine este cel mai frumos Corgi din lume?</h3>
+<button onclick="a1('A')">A. Alfie the Unicorn</button><button onclick="a1('B')">B. Susan, Willow and Holly</button><button onclick="a1('C')">C. Maxine the fluffy corgi</button>`},
+{img:"poza 0.jpeg",msg:"🐾 Good Job! You know me well!"},
+{q:`<h3>2. Ce sunet mă activează instant?</h3><label><input id=a type=checkbox> Dysonul lui mami</label><br><label><input id=b type=checkbox> Aparatul de cafea a lui tati</label><br><label><input id=c type=checkbox> Robotul strângător de blană</label><br><button onclick="a2()">Confirmă</button>`},
+{img:"poza 1.jpeg",msg:"🔊 Good Job!"},
+{q:`<h3>3. De cine ascult mai mult?</h3><button onclick="a3('A')">Mami</button><button onclick="a3('B')">Tati</button><button onclick="a3('C')">Prietenul de după gard</button>`},
+{img:"poza 2.jpeg",msg:"😎 Good Job!"},
+{q:`<h3>4. Cine mă iubește cel mai mult din afara familiei?</h3><button onclick="a4('A')">Manu și Alin</button><button onclick="a4('B')">Bogdan și Sabina</button><button onclick="a4('C')">Dani și Amalia</button>`},
+{img:"poza 3.jpeg",msg:"❤️ Good Job!"},
+{q:`<h2>Acest quest mai are o singură provocare cu urmări pe viață.</h2><button onclick="next()">Continuă</button><button onclick="next()">Continuă</button>`},
+{q:`<h2>Vreți să fiți nașii noștri?</h2><button onclick="finish()">DA</button><button onclick="finish()">BINE, FIE</button><button onclick="finish()">Nu mai întrebați odată?</button>`}
+];
+let i=0;
+function render(){
+let s=steps[i],h='<div class="card">';
+if(s.img)h+=`<img src="${s.img}"><br>`;
+if(s.html)h+=s.html;
+if(s.q)h+=s.q;
+if(s.msg)h+=`<h2>${s.msg}</h2><button onclick="next()">Continue ➜</button>`;
+h+='</div>';
+app.innerHTML=h;
+}
+function next(){i++;render();}
+function a1(v){if(v==='A')next();else alert('Mai gândește-te!');}
+function a2(){if(a.checked&&b.checked&&c.checked)next();else alert('Mai gândește-te... poate sunt mai multe.');}
+function a3(v){if(v==='B'){alert('Am o personalitate puternică, uneori nu ascult de nimeni.');next();}else alert('Încearcă din nou');}
+function a4(v){if(v==='C'){alert('Bineînțeles că ei 2 mă iubesc cel mai mult și sunt cel mai fericit când vin la mine și mă lasă să îi ling. 👅🐶');next();}else alert('Mai încearcă');}
+function finish(){
+app.innerHTML='<div class="card"><img src="poza finala.jpeg"><h1>🎉 We are now family 🎉</h1><h2>We are in this together ❤️</h2></div>';
+for(let k=0;k<250;k++){let d=document.createElement('div');d.className='star';d.textContent=['🎆','✨','🎉'][Math.floor(Math.random()*3)];d.style.left=Math.random()*100+'vw';d.style.bottom='-20px';d.style.setProperty('--x',(Math.random()*500-250)+'px');d.style.animationDelay=(Math.random()*2)+'s';fx.appendChild(d);}
+}
+render();
+</script></body></html>
