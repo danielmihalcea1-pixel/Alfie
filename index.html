@@ -80,11 +80,33 @@ button{
 
 }
 
+#popupBox button{
+
+    background:linear-gradient(135deg,#ff8c66,#ff6333);
+
+    min-width:150px;
+
+    margin-top:10px;
+
+    box-shadow:0 10px 25px rgba(255,99,51,.35);
+
+    transition:.25s;
+
+}
+
 button:hover{
 
     background:#ff6333;
 
     transform:translateY(-3px);
+
+}
+
+#popupBox button:hover{
+
+    transform:translateY(-3px) scale(1.04);
+
+    box-shadow:0 15px 35px rgba(255,99,51,.45);
 
 }
 
@@ -129,6 +151,58 @@ h3{
     }
 
 }
+
+@keyframes popup{
+
+    0%{
+
+        transform:scale(.75);
+
+        opacity:0;
+
+    }
+
+    70%{
+
+        transform:scale(1.05);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+@keyframes iconBounce{
+
+    0%{
+
+        transform:scale(.4) rotate(-15deg);
+
+        opacity:0;
+
+    }
+
+    60%{
+
+        transform:scale(1.2) rotate(10deg);
+
+    }
+
+    100%{
+
+        transform:scale(1) rotate(0deg);
+
+        opacity:1;
+
+    }
+
+}
     
 #popupOverlay{
 
@@ -168,13 +242,37 @@ h3{
 
     box-shadow:0 25px 60px rgba(0,0,0,.25);
 
+    animation:popup .28s ease;
+
 }
 
 #popupIcon{
 
-    font-size:60px;
+    font-size:52px;
 
-    margin-bottom:10px;
+    animation:iconBounce .45s ease;
+
+}
+
+#popupIconWrapper{
+
+    width:90px;
+
+    height:90px;
+
+    margin:0 auto 18px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#fff3ea,#ffe2d5);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    box-shadow:0 8px 20px rgba(255,99,51,.15);
 
 }
 
@@ -184,17 +282,24 @@ h3{
 
     color:#ff6333;
 
+    font-size:32px;
+
+    font-weight:700;
+
 }
 
 #popupText{
 
     font-size:20px;
 
-    line-height:1.5;
+    line-height:1.6;
 
-    margin-bottom:25px;
+    color:#555;
+
+    margin-bottom:28px;
 
 }
+    
 </style>
 </head>
 
@@ -206,7 +311,9 @@ h3{
 
 <div id="popupOverlay" style="display:none;">
     <div id="popupBox">
-        <div id="popupIcon">🐶</div>
+        <div id="popupIconWrapper">
+    <div id="popupIcon">🐶</div>
+</div>
         <h2 id="popupTitle"></h2>
         <p id="popupText"></p>
         <button onclick="closePopup()">OK</button>
