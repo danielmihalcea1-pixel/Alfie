@@ -18,14 +18,18 @@ body{
 #app{
 
     width:100%;
-    max-width:760px;
-    padding:35px;
+
+    max-width:650px;
+
+    margin:auto;
 
 }
 
 .card{
 
-    background:white;
+    background:rgba(255,255,255,.92);
+
+    backdrop-filter:blur(10px);
 
     border-radius:30px;
 
@@ -42,13 +46,13 @@ img{
 
     width:100%;
 
+    height:auto;
+
+    max-height:none;
+
     border-radius:22px;
 
     margin-bottom:20px;
-
-    max-height:520px;
-
-    object-fit:cover;
 
 }
 
@@ -138,10 +142,106 @@ const steps=[
 {img:"poza 2.jpeg",msg:"😎 Good Job!"},
 {q:`<h3>4. Cine mă iubește cel mai mult din afara familiei?</h3><button onclick="a4('A')">Manu și Alin</button><button onclick="a4('B')">Bogdan și Sabina</button><button onclick="a4('C')">Dani și Amalia</button>`},
 {img:"poza 3.jpeg",msg:"❤️ Good Job!"},
-{q:`<h2>Acest quest mai are o singură provocare cu urmări pe viață.</h2><button onclick="next()">Continuă</button><button onclick="next()">Continuă</button>`},
-{q:`<h2>Vreți să fiți nașii noștri?</h2><button onclick="finish()">DA</button><button onclick="finish()">BINE, FIE</button><button onclick="finish()">Nu mai întrebați odată?</button>`}
-];
+{
+q:`
+
+<h2>🐶 Alfie has one last quest for you...</h2>
+
+<p style="font-size:22px;margin-bottom:25px;">
+This challenge might change your lives forever ❤️
+</p>
+
+<div style="position:relative;height:130px;">
+
+<button
+onclick="next()"
+style="
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+">
+
+I'm ready! 🚀
+
+</button>
+
+<button
+
+id="runButton"
+
+style="
+position:absolute;
+top:70px;
+left:45%;
+transition:.25s;
+background:#888;
+"
+
+onmouseover="runAway()"
+
+>
+
+Maybe not... 😅
+
+</button>
+
+</div>
+
+`
+},
+
+{
+q:`
+
+<h1 style="font-size:40px;margin-bottom:10px;">
+❤️
+</h1>
+
+<h2 style="font-size:38px;">
+Will you be our Godparents?
+</h2>
+
+<p style="font-size:22px;">
+(There is only one correct answer 😄)
+</p>
+
+<br>
+
+<button onclick="finish()">
+
+YES ❤️
+
+</button>
+
+<button onclick="finish()">
+
+ABSOLUTELY ❤️
+
+</button>
+
+<button onclick="finish()">
+
+OF COURSE ❤️
+
+</button>
+
+`
+}
 let i=0;
+function runAway(){
+
+const b=document.getElementById("runButton");
+
+if(!b)return;
+
+const x=Math.random()*220-110;
+
+const y=Math.random()*70-35;
+
+b.style.transform=
+`translate(${x}px,${y}px)`;
+
+}
 function render(){
 let s=steps[i],h='<div class="card">';
 if(s.img)h+=`<img src="${s.img}"><br>`;
@@ -157,8 +257,137 @@ function a2(){if(a.checked&&b.checked&&c.checked)next();else alert('Mai gândeș
 function a3(v){if(v==='B'){alert('Am o personalitate puternică, uneori nu ascult de nimeni.');next();}else alert('Încearcă din nou');}
 function a4(v){if(v==='C'){alert('Bineînțeles că ei 2 mă iubesc cel mai mult și sunt cel mai fericit când vin la mine și mă lasă să îi ling. 👅🐶');next();}else alert('Mai încearcă');}
 function finish(){
-app.innerHTML='<div class="card"><img src="poza finala.jpeg"><h1>🎉 We are now family 🎉</h1><h2>We are in this together ❤️</h2></div>';
-for(let k=0;k<250;k++){let d=document.createElement('div');d.className='star';d.textContent=['🎆','✨','🎉'][Math.floor(Math.random()*3)];d.style.left=Math.random()*100+'vw';d.style.bottom='-20px';d.style.setProperty('--x',(Math.random()*500-250)+'px');d.style.animationDelay=(Math.random()*2)+'s';fx.appendChild(d);}
+
+app.innerHTML=`
+<div class="card">
+
+<img src="poza finala.jpeg">
+
+<h1
+style="
+font-size:48px;
+color:#ff6333;
+">
+
+❤️ We are now family ❤️
+
+</h1>
+
+<h2
+style="
+font-size:34px;
+">
+
+Thank you for saying...
+
+</h2>
+
+<h1
+style="
+font-size:58px;
+color:#ff6333;
+">
+
+YES ❤️
+
+</h1>
+
+<p
+style="
+font-size:22px;
+margin-top:20px;
+">
+
+We can't wait to share this journey with you.
+
+</p>
+
+<canvas id="fireworks"></canvas>
+
+</div>
+`;
+
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+
+canvas.style.position="fixed";
+canvas.style.left="0";
+canvas.style.top="0";
+canvas.style.width="100vw";
+canvas.style.height="100vh";
+canvas.style.pointerEvents="none";
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+
+function explosion(){
+
+    const x=Math.random()*canvas.width;
+    const y=Math.random()*canvas.height*0.45;
+
+    for(let i=0;i<80;i++){
+
+        particles.push({
+
+            x,
+
+            y,
+
+            dx:(Math.random()-0.5)*8,
+
+            dy:(Math.random()-0.5)*8,
+
+            life:100,
+
+            color:`hsl(${Math.random()*360},100%,60%)`
+
+        });
+
+    }
+
+}
+
+function animate(){
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    particles.forEach((p,index)=>{
+
+        p.x+=p.dx;
+        p.y+=p.dy;
+
+        p.dy+=0.03;
+
+        p.life--;
+
+        ctx.beginPath();
+
+        ctx.fillStyle=p.color;
+
+        ctx.arc(p.x,p.y,3,0,Math.PI*2);
+
+        ctx.fill();
+
+        if(p.life<=0){
+
+            particles.splice(index,1);
+
+        }
+
+    });
+
+    requestAnimationFrame(animate);
+
+}
+
+animate();
+
+explosion();
+
+setInterval(explosion,900);
+
 }
 render();
 </script></body></html>
