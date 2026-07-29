@@ -129,7 +129,90 @@ h3{
     }
 
 }
-</style></head><body><div id="fx"></div><div id="app"></div>
+    
+#popupOverlay{
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(0,0,0,.45);
+
+    backdrop-filter:blur(6px);
+
+    z-index:9999;
+
+    animation:fade .25s;
+
+}
+
+#popupBox{
+
+    background:white;
+
+    width:90%;
+
+    max-width:420px;
+
+    padding:35px;
+
+    border-radius:26px;
+
+    text-align:center;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.25);
+
+}
+
+#popupIcon{
+
+    font-size:60px;
+
+    margin-bottom:10px;
+
+}
+
+#popupTitle{
+
+    margin:10px 0;
+
+    color:#ff6333;
+
+}
+
+#popupText{
+
+    font-size:20px;
+
+    line-height:1.5;
+
+    margin-bottom:25px;
+
+}
+</style>
+</head>
+
+<body>
+
+<div id="fx"></div>
+
+<div id="app"></div>
+
+<div id="popupOverlay" style="display:none;">
+    <div id="popupBox">
+        <div id="popupIcon">🐶</div>
+        <h2 id="popupTitle"></h2>
+        <p id="popupText"></p>
+        <button onclick="closePopup()">OK</button>
+    </div>
+</div>
+
 <script>
 const steps=[
 {title:"🐶 Alfie's Quest",img:"poza 00.jpeg",html:`<h2>🐶 Alfie's Quest</h2><p>Alfie needs your help!</p><button onclick="next()">Start the Quest 🚀</button>`},
@@ -231,6 +314,25 @@ OF COURSE ❤️
 ];
 
 let i=0;
+
+function showPopup(icon,title,text){
+
+    document.getElementById("popupIcon").textContent=icon;
+
+    document.getElementById("popupTitle").textContent=title;
+
+    document.getElementById("popupText").textContent=text;
+
+    document.getElementById("popupOverlay").style.display="flex";
+
+}
+
+function closePopup(){
+
+    document.getElementById("popupOverlay").style.display="none";
+
+}
+    
 function runAway(){
 
 const b=document.getElementById("runButton");
@@ -255,7 +357,23 @@ h+='</div>';
 app.innerHTML=h;
 }
 function next(){i++;render();}
-function a1(v){if(v==='A')next();else alert('Not quite... try again! 🐶');}
+function a1(v){
+
+    if(v==='A'){
+
+        next();
+
+    }else{
+
+        showPopup(
+            "🐶",
+            "Oops!",
+            "Not quite... try again!"
+        );
+
+    }
+
+}
 function a2(){if(a.checked&&b.checked&&c.checked)next();else alert('Hmm... maybe more than one answer is correct. 😉');}
 function a3(v){if(v==='B'){alert("To be honest... I have a strong personality. Sometimes I don't listen to anyone. 😎");next();}else alert('Not this time... try again!');}
 function a4(v){if(v==='C'){alert("Of course they do! They love me the most, and I'm happiest when they come to visit and let me cover them with kisses. 👅🐶");next();}else alert('Almost... give it another try!');}
