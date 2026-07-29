@@ -132,16 +132,16 @@ h3{
 </style></head><body><div id="fx"></div><div id="app"></div>
 <script>
 const steps=[
-{title:"🐶 Alfie's Quest",img:"poza 00.jpeg",html:`<h2>🐶 Alfie's Quest</h2><p>Alfie are nevoie de ajutorul vostru!</p><button onclick="next()">Start</button>`},
-{q:`<h3>1. Cine este cel mai frumos Corgi din lume?</h3>
+{title:"🐶 Alfie's Quest",img:"poza 00.jpeg",html:`<h2>🐶 Alfie's Quest</h2><p>Alfie needs your help!</p><button onclick="next()">Start the Quest 🚀</button>`},
+{q:`<h3>1. Who is the most handsome Corgi in the world?</h3>
 <button onclick="a1('A')">A. Alfie the Unicorn</button><button onclick="a1('B')">B. Susan, Willow and Holly</button><button onclick="a1('C')">C. Maxine the fluffy corgi</button>`},
-{img:"poza 0.jpeg",msg:"🐾 Good Job! You know me well!"},
-{q:`<h3>2. Ce sunet mă activează instant?</h3><label><input id=a type=checkbox> Dysonul lui mami</label><br><label><input id=b type=checkbox> Aparatul de cafea a lui tati</label><br><label><input id=c type=checkbox> Robotul strângător de blană</label><br><button onclick="a2()">Confirmă</button>`},
-{img:"poza 1.jpeg",msg:"🔊 Good Job!"},
-{q:`<h3>3. De cine ascult mai mult?</h3><button onclick="a3('A')">Mami</button><button onclick="a3('B')">Tati</button><button onclick="a3('C')">Prietenul de după gard</button>`},
-{img:"poza 2.jpeg",msg:"😎 Good Job!"},
-{q:`<h3>4. Cine mă iubește cel mai mult din afara familiei?</h3><button onclick="a4('A')">Manu și Alin</button><button onclick="a4('B')">Bogdan și Sabina</button><button onclick="a4('C')">Dani și Amalia</button>`},
-{img:"poza 3.jpeg",msg:"❤️ Good Job!"},
+{img:"poza 0.jpeg",msg:"🐾 Great job! You know me very well!"},
+{q:`<h3>2. Which sounds instantly get my attention?</h3><label><input id=a type=checkbox> Mom's Dyson</label><br><label><input id=b type=checkbox> Dad's coffee machine</label><br><label><input id=c type=checkbox> My personal fur collector 🤖</label><br><button onclick="a2()">Confirm ✅</button>`},
+{img:"poza 1.jpeg",msg:"🔊 Correct!"},
+{q:`<h3>3. Who do I listen to the most?</h3><button onclick="a3('A')">Mom</button><button onclick="a3('B')">Dad</button><button onclick="a3('C')">The neighbor's dog</button>`},
+{img:"poza 2.jpeg",msg:"😎 Exactly!"},
+{q:`<h3>4. Who loves me the most outside my family?</h3><button onclick="a4('A')">Manu and Alin</button><button onclick="a4('B')">Bogdan and Sabina</button><button onclick="a4('C')">❤️Dani and Amalia❤️</button>`},
+{img:"poza 3.jpeg",msg:"❤️ Absolutely right!"},
 {
 q:`
 
@@ -250,15 +250,15 @@ let s=steps[i],h='<div class="card">';
 if(s.img)h+=`<img src="${s.img}"><br>`;
 if(s.html)h+=s.html;
 if(s.q)h+=s.q;
-if(s.msg)h+=`<h2>${s.msg}</h2><button onclick="next()">Continue ➜</button>`;
+if(s.msg)h+=`<h2>${s.msg}</h2><button onclick="next()">Next Challenge ➜</button>`;
 h+='</div>';
 app.innerHTML=h;
 }
 function next(){i++;render();}
-function a1(v){if(v==='A')next();else alert('Mai gândește-te!');}
-function a2(){if(a.checked&&b.checked&&c.checked)next();else alert('Mai gândește-te... poate sunt mai multe.');}
-function a3(v){if(v==='B'){alert('Am o personalitate puternică, uneori nu ascult de nimeni.');next();}else alert('Încearcă din nou');}
-function a4(v){if(v==='C'){alert('Bineînțeles că ei 2 mă iubesc cel mai mult și sunt cel mai fericit când vin la mine și mă lasă să îi ling. 👅🐶');next();}else alert('Mai încearcă');}
+function a1(v){if(v==='A')next();else alert('Not quite... try again! 🐶');}
+function a2(){if(a.checked&&b.checked&&c.checked)next();else alert('Hmm... maybe more than one answer is correct. 😉');}
+function a3(v){if(v==='B'){alert('To be honest... I have a strong personality. Sometimes I don't listen to anyone. 😎');next();}else alert('Not this time... try again!');}
+function a4(v){if(v==='C'){alert('Of course they do! They love me the most, and I'm happiest when they come to visit and let me cover them with kisses. 👅🐶');next();}else alert('Almost... give it another try!');}
 function finish(){
 
 app.innerHTML=`
