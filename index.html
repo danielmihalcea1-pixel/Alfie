@@ -422,6 +422,40 @@ We love you, but we can't ❤️
 
 let i=0;
 
+function playSound(type){
+
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioContext();
+
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+
+    if(type === "correct"){
+        oscillator.frequency.setValueAtTime(650, ctx.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(950, ctx.currentTime + 0.15);
+    }
+
+    if(type === "wrong"){
+        oscillator.frequency.setValueAtTime(220, ctx.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.18);
+    }
+
+    if(type === "pop"){
+        oscillator.frequency.setValueAtTime(450, ctx.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(700, ctx.currentTime + 0.08);
+    }
+
+    gain.gain.setValueAtTime(0.12, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
+
+    oscillator.start();
+    oscillator.stop(ctx.currentTime + 0.22);
+
+}
+
 function showPopup(icon,title,text){
 
     document.getElementById("popupIcon").textContent=icon;
@@ -480,12 +514,22 @@ function a1(v){
 
         next();
 
-    }else{
+    }else if(v==='B'){
+
+    playSound("wrong");
+
+    showPopup(
+        "🤨",
+        "Excuse me?",
+        "Who the heck are they?! Never heard of them. 😂"
+    );
+
+}else if(v==='C'){
 
         showPopup(
-            "🐶",
-            "Oops!",
-            "Not quite... try again!"
+            "😏",
+            "Nice try!",
+            "Maybe in another life... but definitely not in this one. 🐶👑"
         );
 
     }
@@ -541,23 +585,31 @@ function a3(v){
 }
 function a4(v){
 
-    if(v==='C'){
+    if(v==='A'){
 
         showPopup(
-    "❤️",
-    "Exactly!",
-    "They love me the most, and I'm happiest when they come to visit and let me cover them with kisses!"
-);
-
-popupNext=next;
-
-    }else{
-
-        showPopup(
-            "🐶",
-            "Almost!",
-            "Give it another try!"
+            "🌭",
+            "Wrong dog!",
+            "You got the wrong breed! That's the Dachshund department. 😂🐶"
         );
+
+    }else if(v==='B'){
+
+        showPopup(
+            "👑",
+            "Almost royal enough!",
+            "Right Royal Family... wrong generation. 👑🐶 The Corgis belonged to the Queen!"
+        );
+
+    }else if(v==='C'){
+
+        showPopup(
+            "❤️",
+            "Exactly!",
+            "They love me the most, and I'm happiest when they come to visit and let me cover them with kisses! 👅🐶"
+        );
+
+        popupNext=next;
 
     }
 
